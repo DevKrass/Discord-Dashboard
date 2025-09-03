@@ -42,7 +42,7 @@ def get_messages_per_channel():
     return results
 
 def get_flagged_messages(limit=10):
-    FLAGGED_WORDS = get_flagged_words()
+    flagged_words = get_flagged_words()
     conn = connect_db()
     cur = conn.cursor()
     cur.execute("SELECT author_name, content FROM messages")
@@ -51,7 +51,7 @@ def get_flagged_messages(limit=10):
     for author, content in cur.fetchall():
         if content:
             lower_content = content.lower()
-            for word in FLAGGED_WORDS:
+            for word in flagged_words:
                 if word.lower() in lower_content:
                     counts[author] = counts.get(author, 0) + 1
                     break
